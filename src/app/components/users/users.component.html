@@ -1,0 +1,16 @@
+<div *ngIf="users.length > 0">
+<ul *ngFor="let user of users; let i = index">
+    <h5>Sr. No {{i+1}}</h5>
+    <li>Name: {{user.firstName}} {{user.lastName}}</li>
+    <li>Age: {{user.age}}</li>
+    <li *ngIf="showAddress">Address: 
+        <ul>
+            <li>Street: {{user.address.street}}</li>
+            <li>City: {{user.address.city}}</li>
+            <li>State: {{user.address.state}}</li>
+        </ul>
+    </li>
+</ul>
+</div>
+
+<p *ngIf="users.length === 0">No Users Found</p>
