@@ -7,6 +7,10 @@ import {User} from "../../models/user/User"
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent {
+  user:User={
+   firstName:'',
+   lastName:'',
+  }
   users:User[];
   showAddress:boolean=false;
   isEnabled:boolean=true;
@@ -25,7 +29,8 @@ export class UsersComponent {
       },
       isActive:true,
       registrationDate:'2021-03-12',
-      balance:100
+      balance:100,
+      showAddress:true
      },
      {
       firstName:"Jatin",
@@ -38,7 +43,8 @@ export class UsersComponent {
       },
       isActive:false,
       registrationDate:'2021-08-01',
-      balance:200
+      balance:200,
+      showAddress:true
      },
      {
       firstName:"Manish",
@@ -51,12 +57,12 @@ export class UsersComponent {
       },
       isActive:true,
       registrationDate:'2021-11-21',
-      balance:34
-     }
+      balance:34,
+      showAddress:false
+
+     },
+
     ]
-   this.addressController()
- //  this.setCurrentClasses()
- this.setCurrentStyles()
   }
 
   addressController():boolean{
@@ -69,14 +75,23 @@ export class UsersComponent {
       'border-success':this.showAddress
    }
   }
-  setCurrentStyles(){
-   this.currentStyles={
-      'padding-top':this.showAddress?'0':'40px',
-      'font-size':this.showAddress?'':'40px',
-      'color':(this.showAddress)?'blue':'red'
-   }
+
+
+  addNewUser(){
+   console.log(this.user)
+   this.users.unshift(this.user);
+   this.user={
+      firstName:'',
+      lastName:'',
+     }
+  }
+
+  toggleAddress(user:User){
+   user.showAddress=!user.showAddress;
+  }
+  onSubmit(event:any){
+   console.log("inside submit")
+   event.preventDefault()
   }
 }
-
-
 

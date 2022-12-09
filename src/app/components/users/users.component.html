@@ -1,20 +1,55 @@
-<button disabled={{users.length}} class="btn btn-dark mb-3">
-Add User
-</button>
-<ul *ngIf="users.length > 0">
-<li class="card card-body mb-2" *ngFor="let user of users; let i = index"
- [class.bg-light]="!user.isActive" [style.border-color]="user.isActive?'green':''" >
-    <h5 [ngStyle]="currentStyles">{{i+1}}. {{user.firstName | uppercase}} {{user.lastName | uppercase}} </h5>
-    <!-- <img class="img-fluid lg-3" [src]="user.image">  -->
-    <ul class="list-group" *ngIf="showAddress">
-        <li [style.background-color]="user.age>=65?'yellow':''" class="list-group-item">Age: {{user.age}}</li> 
-        <li class="list-group-item"> Address:  {{user.address.street}} {{user.address.city}} {{user.address.state}}</li>
-        <li class="list-group-item"> Sign Up Date:  {{user.registrationDate | date : 'dd/MM/yyyy'}}</li>
-        <li class="list-group-item"> Account Balance:  {{user.balance | currency : 'GBP' : 'symbol'}}</li>
-        <li class="list-group-item"> cutom pipe:  {{3 | exponentialStrength : 4}}</li>
+<div class="card card-body mb-3">
+    <h2>
+        Add New User
+    </h2>
+    <form (submit)="onSubmit($event)">
+        <div class="form-group">
+            <label>First Name</label>
+            <input 
+            type="text" 
+            [(ngModel)]="user.firstName" 
+            class="form-control"
+            #userFirstName="ngModel"
+            required
+            minlength="2"
+            name="firstName">
+            <div class="invalid-feedback">
+               Some Error
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" [(ngModel)]="user.lastName" class="form-control" name="lastName">
+        </div>
+        <div class="form-group">
+            <label>Age</label>
+            <input type="text" [(ngModel)]="user.age" class="form-control" name="age">
+        </div>
+        <button [disabled]="user.firstName==''||user.lastName==''" (click)="addNewUser()" class="btn btn-dark mb-3 mt-3">
+            Add User
+        </button>
+    </form>
+</div>
 
-    </ul>
-</li>
+<ul *ngIf="users.length > 0">
+    <li class="card card-body mb-2" *ngFor="let user of users; let i = index" [class.bg-light]="!user.isActive"
+        [style.border-color]="user.isActive?'green':''">
+        <h5 [ngStyle]="currentStyles">
+            {{i+1}}. {{user.firstName | uppercase}} {{user.lastName | uppercase}}
+            <small>
+                <button (click)="toggleAddress(user)" class="btn btn-dark btn-sm">
+                    <i [ngClass]="user.showAddress?'fa fa-minus':'fa fa-plus'"></i>
+                </button>
+            </small>
+        </h5>
+        <ul class="list-group" *ngIf="user.showAddress">
+            <li class="list-group-item">Age: {{user?.age}}</li>
+            <li class="list-group-item"> Address: {{user?.address?.street}} {{user?.address?.city}}
+                {{user?.address?.state}}</li>
+            <li class="list-group-item"> Sign Up Date: {{user.registrationDate | date : 'dd/MM/yyyy'}}</li>
+            <li class="list-group-item"> Account Balance: {{user.balance | currency : 'GBP' : 'symbol'}}</li>
+        </ul>
+    </li>
 </ul>
 
 <p *ngIf="users.length === 0">No Users Found</p>
