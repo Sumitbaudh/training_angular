@@ -8,6 +8,7 @@ import { UserComponent } from './components/user/user.component';
 import { UsersComponent } from './components/users/users.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { ExponentialStrengthPipe } from './pipes/exponential-strength.pipe';
+import { UserService } from './services/user.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,9 @@ import { ExponentialStrengthPipe } from './pipes/exponential-strength.pipe';
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

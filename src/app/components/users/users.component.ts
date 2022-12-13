@@ -1,5 +1,6 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component,ViewChild,OnInit } from '@angular/core';
 import {User} from "../../models/user/User"
+import { UserService } from 'src/app/services/user.service';
 import {NgForm} from '@angular/forms'
 @Component({
   selector: 'app-users',
@@ -17,54 +18,18 @@ export class UsersComponent {
   currentClasses:any={};
   currentStyles:any={};
   @ViewChild('userForm') userForm:any;
-  constructor(){
-     this.users=[
-      {
-      firstName:"HaRsh",
-      lastName:"kuMaR",
-      age:45,
-      address:{
-         street:"5th Markup",
-         city:"New York",
-         state:"DC"
-      },
-      isActive:true,
-      registrationDate:'2021-03-12',
-      balance:100,
-      showAddress:true
-     },
-     {
-      firstName:"Jatin",
-      lastName:"Sahoo",
-      age:75,
-      address:{
-         street:"6th New Street",
-         city:"New Delhi",
-         state:"Delhi"
-      },
-      isActive:false,
-      registrationDate:'2021-08-01',
-      balance:200,
-      showAddress:true
-     },
-     {
-      firstName:"Manish",
-      lastName:"Sharma",
-      age:35,
-      address:{
-         street:"2nd Old Street",
-         city:"Lucknow",
-         state:"Uttar Pradesh"
-      },
-      isActive:true,
-      registrationDate:'2021-11-21',
-      balance:34,
-      showAddress:false
-
-     },
-
-    ]
+  constructor(private userService: UserService){
+   console.log("Inside constructor");
+   
+    this.users=[]
   }
+
+  ngOnInit(){
+      console.log("Inside ngOnIt");
+      
+     this.users = this.userService.getUsers();
+  }
+
 
   addressController():boolean{
    return this.showAddress=true;
@@ -77,16 +42,6 @@ export class UsersComponent {
    }
   }
 
-
-//   addNewUser(){
-//    console.log(this.user)
-//    this.users.unshift(this.user);
-//    this.user={
-//       firstName:'',
-//       lastName:'',
-//      }
-//   }
-
   toggleAddress(user:User){
    user.showAddress=!user.showAddress;
   }
@@ -95,11 +50,7 @@ export class UsersComponent {
       console.log("Form is not valid")
    }
    else{
-     this.users.unshift(this.user);
-     this.user={
-            firstName:'',
-            lastName:'',
-           }
+      this.userService.addUser(value);
       this.userForm.reset();
    }
   }
