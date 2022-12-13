@@ -2,30 +2,52 @@
     <h2>
         Add New User
     </h2>
-    <form (submit)="onSubmit($event)">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
         <div class="form-group">
             <label>First Name</label>
             <input 
             type="text" 
+            [ngClass]="{'is-invalid':userFirstName.errors && userFirstName.touched}"
             [(ngModel)]="user.firstName" 
             class="form-control"
             #userFirstName="ngModel"
             required
             minlength="2"
             name="firstName">
-            <div class="invalid-feedback">
-               Some Error
+            <div [hidden]="!userFirstName.errors?.['required']" class="invalid-feedback">
+               First name required
+            </div>
+             <div [hidden]="!userFirstName.errors?.['minlength']" class="invalid-feedback">
+               Must be atleast 2 characters 
             </div>
         </div>
         <div class="form-group">
             <label>Last Name</label>
-            <input type="text" [(ngModel)]="user.lastName" class="form-control" name="lastName">
+            <input 
+            type="text" 
+            [ngClass]="{'is-invalid':userLastName.errors && userLastName.touched}"
+            [(ngModel)]="user.lastName" 
+            class="form-control" 
+            #userLastName="ngModel"
+            required
+            minlength="2"
+            name="lastName">
+            <div [hidden]="!userLastName.errors?.['required']" class="invalid-feedback">
+                Last name is required
+            </div>
+            <div [hidden]="!userLastName.errors?.['minlength']" class="invalid-feedback">
+                Must be atleast 2 characters
+            </div>
         </div>
         <div class="form-group">
             <label>Age</label>
-            <input type="text" [(ngModel)]="user.age" class="form-control" name="age">
+            <input 
+            type="text" 
+            [(ngModel)]="user.age" 
+            class="form-control" 
+            name="age">
         </div>
-        <button [disabled]="user.firstName==''||user.lastName==''" (click)="addNewUser()" class="btn btn-dark mb-3 mt-3">
+        <button [disabled]="!userForm.form.valid" class="btn btn-dark mb-3 mt-3">
             Add User
         </button>
     </form>

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import {User} from "../../models/user/User"
-
+import {NgForm} from '@angular/forms'
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -16,6 +16,7 @@ export class UsersComponent {
   isEnabled:boolean=true;
   currentClasses:any={};
   currentStyles:any={};
+  @ViewChild('userForm') userForm:any;
   constructor(){
      this.users=[
       {
@@ -77,21 +78,30 @@ export class UsersComponent {
   }
 
 
-  addNewUser(){
-   console.log(this.user)
-   this.users.unshift(this.user);
-   this.user={
-      firstName:'',
-      lastName:'',
-     }
-  }
+//   addNewUser(){
+//    console.log(this.user)
+//    this.users.unshift(this.user);
+//    this.user={
+//       firstName:'',
+//       lastName:'',
+//      }
+//   }
 
   toggleAddress(user:User){
    user.showAddress=!user.showAddress;
   }
-  onSubmit(event:any){
-   console.log("inside submit")
-   event.preventDefault()
+  onSubmit({value,valid}:NgForm){
+   if(!valid){
+      console.log("Form is not valid")
+   }
+   else{
+     this.users.unshift(this.user);
+     this.user={
+            firstName:'',
+            lastName:'',
+           }
+      this.userForm.reset();
+   }
   }
 }
 
