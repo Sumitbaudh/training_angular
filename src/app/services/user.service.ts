@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable,of } from 'rxjs';
 import { User } from '../models/user/User';
 
 @Injectable({
@@ -7,6 +8,7 @@ import { User } from '../models/user/User';
 export class UserService {
 
   users: User[];
+  data:Observable<any>;
 
   constructor() {
     this.users = [
@@ -55,11 +57,33 @@ export class UserService {
       },
 
     ]
+    this.data=new Observable();
   }
 
-  getUsers():User[]{
+  getData(){
+    this.data=new Observable(observer=>{
+      setTimeout(()=>{
+        observer.next(1)
+      },2000)
+
+      setTimeout(()=>{
+        observer.next(2)
+      },4000)
+
+      setTimeout(()=>{
+        observer.next(3)
+      },6000)
+
+      setTimeout(()=>{
+        observer.next(4)
+      },8000)
+    })
+ return this.data;
+    
+  }
+  getUsers():Observable<User[]>{
     console.log("Inside service")
-    return this.users;
+    return of(this.users);
   }
 
   addUser(user:User){

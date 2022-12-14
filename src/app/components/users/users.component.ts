@@ -18,6 +18,7 @@ export class UsersComponent {
   currentClasses:any={};
   currentStyles:any={};
   @ViewChild('userForm') userForm:any;
+  data:any;
   constructor(private userService: UserService){
    console.log("Inside constructor");
    
@@ -26,8 +27,12 @@ export class UsersComponent {
 
   ngOnInit(){
       console.log("Inside ngOnIt");
-      
-     this.users = this.userService.getUsers();
+     this.userService.getData().subscribe(data=>{
+      console.log(data)
+     });
+      this.userService.getUsers().subscribe(users=>{
+         this.users=users;
+      });
   }
 
 
