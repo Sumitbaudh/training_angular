@@ -12,6 +12,7 @@ import { ExponentialStrengthPipe } from './pipes/exponential-strength.pipe';
 import { UserService } from './services/user.service';
 import { UserPostsService } from './services/user-posts.service';
 import { UserPostsComponent } from './components/user-posts/user-posts.component';
+import { AddPostsComponent } from './components/add-posts/add-posts.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +20,8 @@ import { UserPostsComponent } from './components/user-posts/user-posts.component
     UsersComponent,
     NavbarComponent,
     ExponentialStrengthPipe,
-    UserPostsComponent
+    UserPostsComponent,
+    AddPostsComponent
   ],
   imports: [
     BrowserModule,

@@ -17,4 +17,8 @@ export class UserPostsComponent implements OnInit {
       this.userPosts=posts
      })
   }
+
+  onNewPost(post:Posts){
+    this.userPosts.unshift(post)
+  }
 }
