@@ -24,4 +24,17 @@ export class UserPostsService {
   savePost(post:Posts):Observable<Posts>{
     return this.http.post<Posts>(this.postsUrl,post,httpOptions)
   }
+
+  updatePost(post:Posts):Observable<Posts>{
+    const url=`${this.postsUrl}/${post.id}`
+
+    return this.http.put<Posts>(url,post,httpOptions)
+  }
+
+  deletePost(post: Posts | number):Observable<Posts>{
+    const id= typeof post==='number'?post:post.id
+    const url =`${this.postsUrl}/${id}`
+
+    return this.http.delete<Posts>(url,httpOptions)
+  }
 }
